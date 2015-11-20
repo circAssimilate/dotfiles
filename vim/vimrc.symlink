@@ -8,7 +8,7 @@ Helptags
 
 " General
 
-  set background=light " Assume a dark background
+  set background=dark         " Assume a dark background
   filetype plugin indent on   " Automatically detect file types.
   syntax on                   " Syntax highlighting
   set mouse=a                 " Automatically enable mouse usage
@@ -233,10 +233,11 @@ let g:ctrlp_user_command = {
 
 " NerdTree shortcut
 nnoremap <leader>d :NERDTreeToggle<cr>
+
+" Provide easy way to refresh NerdTree location
 nnoremap <C-o> :NERDTree %<CR>
 
 let NERDTreeIgnore = ['\.pyc$']
-  " Provide easy way to refresh NerdTree location
 
 
 " Tabularize {
