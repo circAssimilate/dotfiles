@@ -16,5 +16,6 @@ fi
 
 # Install homebrew packages
 brew install grc coreutils
+brew install reattach-to-user-namespace
 
 exit 0
