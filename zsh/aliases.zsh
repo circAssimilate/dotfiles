@@ -1,2 +1,5 @@
 alias reload!='. ~/.zshrc'
 alias tmux='TERM=xterm-256color tmux'
+alias vi='vim'
+alias o='pushd .; cd ~/optimizely;'
+alias f='pushd .; cd ~/optimizely/src/www/frontend;'
