@@ -1,5 +1,8 @@
 alias reload!='. ~/.zshrc'
 alias tmux='TERM=xterm-256color tmux'
+alias rake='noglob bundle exec rake'
 alias vi='vim'
 alias o='pushd .; cd ~/optimizely;'
 alias f='pushd .; cd ~/optimizely/src/www/frontend;'
+alias d='pushd .; cd ~/.dotfiles;'
+alias p='popd;'
