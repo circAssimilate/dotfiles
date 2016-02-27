@@ -24,7 +24,7 @@ alias gf='git fetch'
 alias gps='git push'
 alias gcp='git cherry-pick'
 alias gbl='for k in `git branch|perl -pe s/^..//`;do echo -e `git show --pretty=format:"%Cgreen%ci %Cblue%cr%Creset" $k|head -n 1`\\t$k;done|sort -r | head -n 10'
-alias gbl1='gbl|perl -pe s/(?:.+)\\t// | grep -v "^devel$" | grep -v "`git rev-parse --abbrev-ref HEAD`" | head -n 1'
+alias gbl1='gbl | perl -pe s/.+\\t// | grep -v "`git rev-parse --abbrev-ref HEAD`" | head -n 1'
 alias gcol='git checkout `gbl1`'
 alias gbclean='git branch --merged master | grep -v "\* master" | xargs -n 1 git branch -d'
 alias gss="git stash"
