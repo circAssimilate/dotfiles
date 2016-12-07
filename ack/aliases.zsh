@@ -1,23 +1,15 @@
 function ackf() {
-  o
-  ack "$1" src/www/frontend/src/js
-  popd;
+  ack "$1" ~/Users/Asa/optimizely/src/www/frontend/src/js
 }
 
 function ackb() {
-  o
-  ack "$1" src/www/ --ignore-dir=src/www/frontend
-  popd;
+  ack "$1" ~/Users/Asa/optimizely/src/www/ --ignore-dir=~/Users/Asa/optimizely/src/www/frontend
 }
 
 function ackt() {
-  o
-  ack "$1" src/www/test
-  popd;
+  ack "$1" ~/Users/Asa/optimizely/src/www/test
 }
 
 function ackbdd() {
-  o
-  ack "$1" src/www/test/bdd
-  popd;
+  ack "$1" ~/Users/Asa/optimizely/src/www/test/bdd
 }
