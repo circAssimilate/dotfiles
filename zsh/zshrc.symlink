@@ -1,9 +1,17 @@
-source /Users/Asa/optimizely/.source_this.sh
+source /Users/dhammond/Development/optimizely/.source_this.sh
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 
 # your project folder that we can `c [tab]` to
-export PROJECTS=~/code
+export PROJECTS=~/Code
+
+# Stash your environment variables in ~/.localrc. This means they'll stay out
+# of your main dotfiles repository (which may be public, like this one), but
+# you'll have access to them in your scripts.
+if [[ -a ~/.localrc ]]
+then
+  source ~/.localrc
+fi
 
 # all of our zsh files
 typeset -U config_files
@@ -21,13 +29,6 @@ do
   source $file
 done
 
-# use .localrc for SUPER SECRET CRAP that you don't
-# want in your public, versioned repo.
-if [[ -a ~/.localrc ]]
-then
-  source ~/.localrc
-fi
-
 # initialize autocomplete here, otherwise functions won't be loaded
 autoload -U compinit
 compinit
@@ -40,8 +41,73 @@ done
 
 unset config_files
 
-# added by travis gem
-[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
+# Better history
+# Credits to https://coderwall.com/p/jpj_6q/zsh-better-history-searching-with-arrow-keys
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search # Up
+bindkey "^[[B" down-line-or-beginning-search # Down
 
-export NVM_DIR="/Users/Asa/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+# # Old bash_profile
+# # # See what branch you're on
+# function parse_git_branch {
+#   sed -e 's/ref: refs\/heads\/\(.*\)/ (\1)/' .git/HEAD 2> /dev/null
+#   }
+# PS1='[\t] \u@\h \W$(parse_git_branch) \$ '
+#
+# # Be able to tab complete branch names
+# if [ -f ~/.git-completion.bash ]; then
+#   . ~/.git-completion.bash
+# fi
+#
+# # Color code branch names in your prompt & add an alias for gs == git status
+# function parse_git_branch {
+# git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+# }
+# function format_prompt {
+# local BLUE="\[\033[0;34m\]"
+# local RED="\[\033[0;31m\]"
+# local LIGHT_RED="\[\033[1;31m\]"
+# local GREEN="\[\033[0;32m\]"
+# local LIGHT_GREEN="\[\033[1;32m\]"
+# local WHITE="\[\033[1;37m\]"
+# local LIGHT_GRAY="\[\033[0;37m\]"
+# local DEFAULT="\[\033[0m\]"
+# PS1="$LIGHT_GREEN\w$LIGHT_RED\$(parse_git_branch)$GREEN\$$DEFAULT "
+# }
+# format_prompt
+#
+# # Vim as default editor
+# export EDITOR=vim
+#
+# # Aliases
+# alias dcc='cd ~/Development/primordia && docker-compose'
+# alias gs='git status'
+# alias gl='git log --oneline'
+#
+# source /Users/dhammond/Development/primordia/.source_this.sh
+# source ~/.profile
+#
+# # # The next line updates PATH for the Google Cloud SDK.
+# if [ -f '/Users/dhammond/.google-cloud-sdk/path.bash.inc' ]; then source '/Users/dhammond/.google-cloud-sdk/path.bash.inc'; fi
+# #
+# # # The next line enables shell command completion for gcloud.
+# if [ -f '/Users/dhammond/.google-cloud-sdk/completion.bash.inc' ]; then source '/Users/dhammond/.google-cloud-sdk/completion.bash.inc'; fi
+#
+# # Add arcanist to PATH environment variable
+# export PATH=/Users/$USER/tools/arcanist/bin:$PATH
+#
+# # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+#
+# # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+# # export PATH="$PATH:$HOME/.rvm/bin"
+#
+# export NVM_DIR="$HOME/.nvm"
+#    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#
+# # Add tab completion at the command-line
+# source /Users/$USER/tools/arcanist/resources/shell/bash-completion
