@@ -20,12 +20,13 @@ git_dirty() {
     echo "on %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
   else
     echo "on %{$fg_bold[red]%}$(git_prompt_info)%{$reset_color%}"
+    # echo "(no git repo)"
   fi
 }
 
 git_prompt_info () {
  ref=$($git symbolic-ref HEAD 2>/dev/null) || return
-# echo "(%{\e[0;33m%}${ref#refs/heads/}%{\e[0m%})"
+ # echo "(%{\e[0;33m%}${ref#refs/heads/}%{\e[0m%})"
  echo "${ref#refs/heads/}"
 }
 
@@ -75,10 +76,16 @@ todo(){
 }
 
 directory_name(){
+  # if [[ %1/% == "" ]]
+  # then
+  #   echo ""
+  # else
+  #   echo "%{$fg_bold[blue]%}%1/%\/%{$reset_color%}"
+  # fi
   echo "%{$fg_bold[blue]%}%1/%\/%{$reset_color%}"
 }
 
-export PROMPT=$'$(directory_name) $(git_dirty)$(need_push)› '
+export PROMPT=$'$(hostname_prompt) $(directory_name) $(git_dirty)$(need_push)› '
 set_prompt () {
   export RPROMPT="%{$fg_bold[cyan]%}$(todo)%{$reset_color%}"
 }
