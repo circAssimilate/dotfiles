@@ -5,6 +5,10 @@ Helptags
 " Clear highlighting on escape in normal mode
   nnoremap <esc> :noh<return><esc>
   nnoremap <esc>^[ <esc>^[
+  noremap <Leader>y "*y"
+  noremap <Leader>p "*p"
+  noremap <Leader>Y "*Y"
+  noremap <Leader>P "+P"
 
 " General
 
@@ -16,6 +20,7 @@ Helptags
   set nobackup
   set nowritebackup
   set noswapfile
+  set clipboard=unnamed
   scriptencoding utf-8
   autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif " Always switch to the current file directory
 
@@ -108,6 +113,7 @@ Helptags
   set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
   set formatoptions+=t            " Set the necessary format option to prevent line wrapping
   set textwidth=120               " Prevent wrapping of a line
+  set nowrap                      " No line wrap
 
 " }
 

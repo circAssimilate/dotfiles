@@ -10,6 +10,7 @@ fi
 alias gs='git status'
 alias gso='git show'
 alias gb='git branch'
+alias gbp='git for-each-ref --sort=committerdate refs/heads/ --format="%(HEAD) %(color:black)%(objectname:short)%(color:reset): %(color:green)%(refname:short)%(color:reset) - %(contents:subject) (%(color:yellow)%(committerdate:relative)%(color:reset))"'
 alias gd='git diff'
 alias gdc='git diff --cached'
 alias gc='git commit'
