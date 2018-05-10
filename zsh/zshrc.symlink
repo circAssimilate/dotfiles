@@ -1,5 +1,7 @@
-# source primordia
-source /Users/dhammond/Development/primordia/.source_this.sh
+# export primordia/bin
+export PATH=/Users/dhammond/Development/primordia/bin:$PATH
+export PRIMORDIA_HOME=/Users/dhammond/Development/primordia/
+export PRIMORDIA_ROOT=/Users/dhammond/Development/primordia/
 
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
