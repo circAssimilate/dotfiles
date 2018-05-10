@@ -112,7 +112,7 @@ Helptags
   "set matchpairs+=<:>             " Match, to be used with %
   set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
   set formatoptions+=t            " Set the necessary format option to prevent line wrapping
-  set textwidth=120               " Prevent wrapping of a line
+  "set textwidth=120               " DISABLED: Prevent wrapping of a line
   set nowrap                      " No line wrap
 
 " }

@@ -68,3 +68,14 @@ which sets up a few paths that'll be different on your particular machine.
 defaults, and so on. Tweak this script, and occasionally run `dot` from
 time to time to keep your environment fresh and up-to-date. You can find
 this script in `bin/`.
+
+## Working with Private Credentials
+
+This dotfiles collection has the path `private/*` added to it's `.gitignore`.
+To export environment credentials that should not be shared, you can
+create a `/private` directory at the root of this repo and create a file
+to store these in (e.g. `credentials.zsh`).
+
+## Reloading Dotfiles
+
+You can restart your session or just use `reload!` in any shell to get the latest configuration.
