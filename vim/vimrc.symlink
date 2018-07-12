@@ -1,61 +1,161 @@
-execute pathogen#infect()
-Helptags
+set nocompatible
+set ttyfast
+set termguicolors
+let macvim_skip_colorscheme=1
+set t_ut=
 
-" My Forks
-" Clear highlighting on escape in normal mode
-  nnoremap <esc> :noh<return><esc>
-  nnoremap <esc>^[ <esc>^[
-  noremap <Leader>y "*y"
-  noremap <Leader>p "*p"
-  noremap <Leader>Y "*Y"
-  noremap <Leader>P "+P"
+set modeline
+set modelines=5
+set encoding=utf8 nobomb
 
-" General
+let mapleader = ",,"
+command! -nargs=* -complete=help Ho help <args>|only
 
-  set background=dark         " Assume a dark background
-  filetype plugin indent on   " Automatically detect file types.
-  syntax on                   " Syntax highlighting
-  set mouse=a                 " Automatically enable mouse usage
-  set mousehide               " Hide the mouse cursor while typing
-  set nobackup
-  set nowritebackup
-  set noswapfile
-  set clipboard=unnamed
-  scriptencoding utf-8
-  autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif " Always switch to the current file directory
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+call plug#begin()
+Plug 'junegunn/vim-plug'
+Plug 'zanglg/nova.vim'
+Plug 'rakr/vim-one'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-fugitive'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'vimoutliner/vimoutliner'
+Plug 'leafgarland/typescript-vim'
+Plug 'chrisbra/csv.vim', { 'for': 'csv' }
+Plug 'jacoborus/tender.vim'
+Plug 'romgrk/pp.vim'
+call plug#end()
 
-  set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
-  set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
-  set virtualedit=onemore             " Allow for cursor beyond last character
-  set history=1000                    " Store a ton of history (default is 20)
-  set spell                           " Spell checking on
-  set hidden                          " Allow buffer switching without saving
+"""" NEDTREE SETTINGS
+  " Open a NERDTree automatically when vim starts up if no files were specified
+  autocmd StdinReadPre * let s:std_in=1
+  autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-" }
+  " Open NERDTree automatically when vim starts up on opening a directory
+  autocmd StdinReadPre * let s:std_in=1
+  autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
-" Vim UI {
+  " Close vim if the only window left open is a NERDTree
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-  if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
-    let g:solarized_termcolors=256
-    color solarized                 " Load a colorscheme
-  endif
+  " Change default arrows
+  let g:NERDTreeDirArrowExpandable = '▸'
+  let g:NERDTreeDirArrowCollapsible = '▾'
 
-  let g:solarized_termtrans=1
-  let g:solarized_contrast="high"
-  let g:solarized_visibility="high"
-  set tabpagemax=15               " Only show 15 tabs
-  set showmode                    " Display the current mode
+  " Tab Ctrl+l,h,n
+  map  <C-l> :tabn<CR>
+  map  <C-h> :tabp<CR>
+  map  <C-n> :tabnew<CR>
 
-  set cursorline                  " Highlight current line
+  map <C-j> :NERDTreeToggle<CR>         " Open NERDTree with Ctrl+j
 
+  " Provide easy way to refresh NerdTree location
+  nnoremap <C-o> :NERDTree %<CR>
+
+  let NERDTreeIgnore = ['\.pyc$']
+
+"""" UI SETTINGS
+  colorscheme tender
+  autocmd VimEnter * colorscheme tender
   highlight clear SignColumn      " SignColumn should match background for
                                   " things like vim-gitgutter
+
+  highlight Comment cterm=italic " Italic comments.
+  highlight Comment gui=italic " Italic comments in gui.
+  highlight Todo cterm=italic " Italic comments.
+  highlight Todo gui=italic " Italic comments in gui.
+  highlight Visual guibg=LightGrey
+
+"""" GENERAL SETTINGS
+  if executable('ag')
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor
+
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+    command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+  endif
+
+
+  set splitbelow
+  set splitright
+  set helpheight=30
+  set nowrap
+  set ignorecase
+  set smartcase
+  set gdefault
+  set mouse=a
+  set mousehide
+  set mousefocus
+  if has('mouse_sgr')
+      set ttymouse=sgr
+  endif
+
+  " tabs
+  set tabstop=2
+  set softtabstop=2
+  set shiftwidth=2
+  set expandtab
+  set smarttab
+
+  set wildmenu
+  set sidescroll=1
+  set nohidden
+
+  filetype plugin indent on   " Automatically detect file types.
+  syntax on                   " Syntax highlighting
+  set spell                   " Spell checking on
+  set mouse=a                 " Automatically enable mouse usage
+  set mousehide               " Hide the mouse cursor while typing
+  set mousefocus              " ?
+  if has('mouse_sgr')         " ?
+    set ttymouse=sgr
+  endif
+  set nobackup                " ?
+  set nowritebackup           " ?
+  set noswapfile              " ?
+  set clipboard=unnamed       " For global copy paste
+  scriptencoding utf-8
+  autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif " ? Always switch to the current file directory
+
+  set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter') ?
+  set virtualedit=onemore             " Allow for cursor beyond last character
+  set history=1000                    " Store a ton of history (default is 20)
+  set hidden                          " Allow buffer switching without saving
+  set nocompatible "?
+  set ttyfast "?
+  set termguicolors "?
+  let macvim_skip_colorscheme=1 "?
+  set t_ut= "?
+  set modeline
+  set modelines=5
+  set encoding=utf8 nobomb
+
+  set autoindent                  " Indent at the same level of the previous line
+  set matchpairs+=<:>             " Match, to be used with %
+  set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
+  set formatoptions+=t            " Set the necessary format option to prevent line wrapping
+
+  set tabpagemax=15               " Only show 15 tabs
+  set showmode                    " Display the current mode
 
   if has('cmdline_info')
     set ruler                   " Show the ruler
     set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
-    "set showcmd                 " Show partial commands in status line and
-                                    " Selected characters/lines in visual mode
+    set showcmd                 " Show partial commands in status line and
   endif
 
   if has('statusline')
@@ -64,7 +164,7 @@ Helptags
     " Broken down into easily includeable segments
     set statusline=%<%f\                     " Filename
     set statusline+=%w%h%m%r                 " Options
-    " set statusline+=%{fugitive#statusline()} " Git Hotness
+    set statusline+=%{fugitive#statusline()} " Git Hotness
     set statusline+=\ [%{&ff}/%Y]            " Filetype
     set statusline+=\ [%{getcwd()}]          " Current dir
     set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
@@ -96,225 +196,12 @@ Helptags
   set listchars+=precedes:< " The character to show in the last column when wrap is
                             " off and the line continues beyond the right of the screen
 
-  " Fix for tmux background color easing
-  set t_ut=
 
-" }
-
-" Formatting {
-
-  "set nowrap                      " Wrap long lines
-  set autoindent                  " Indent at the same level of the previous line
-  set shiftwidth=2                " Use indents of 2 spaces
-  set expandtab                   " Tabs are spaces, not tabs
-  set tabstop=2                   " An indentation every two columns
-  set softtabstop=2               " Let backspace delete indent
-  "set matchpairs+=<:>             " Match, to be used with %
-  set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
-  set formatoptions+=t            " Set the necessary format option to prevent line wrapping
-  "set textwidth=120               " DISABLED: Prevent wrapping of a line
-  set nowrap                      " No line wrap
-
-" }
-
-" Key (re)Mappings {
-
-  let mapleader = ','
-
-  " Easier moving in tabs and windows
-  map <C-J> <C-W>j
-  map <C-K> <C-W>k
-  map <C-L> <C-W>l
-  map <C-H> <C-W>h
-
-  " Wrapped lines goes down/up to next row, rather than next line in file.
-  nnoremap j gj
-  nnoremap k gk
-
-  " The following two lines conflict with moving to top and
-  " bottom of the screen
-  map <S-H> gT
-  map <S-L> gt
-
-  " Stupid shift key fixes
-  command! -bang -nargs=* -complete=file E e<bang> <args>
-  command! -bang -nargs=* -complete=file W w<bang> <args>
-  command! -bang -nargs=* -complete=file Wq wq<bang> <args>
-  command! -bang -nargs=* -complete=file WQ wq<bang> <args>
-  command! -bang Wa wa<bang>
-  command! -bang WA wa<bang>
-  command! -bang Q q<bang>
-  command! -bang QA qa<bang>
-  command! -bang Qa qa<bang>
-  cmap Tabe tabe
-
-  " Yank from the cursor to the end of the line, to be consistent with C and D.
-  nnoremap Y y$
-
-  " Shortcuts
-  " Change Working Directory to that of the current file
-  cmap cwd lcd %:p:h
-  cmap cd. lcd %:p:h
-
-  " Visual shifting (does not exit Visual mode)
-  vnoremap < <gv
-  vnoremap > >gv
-
-  " Fix home and end keybindings for screen, particularly on mac
-  " - for some reason this fixes the arrow keys too. huh.
-  map [F $
-  imap [F $
-  map [H g0
-  imap [H g0
-
-  " For when you forget to sudo.. Really Write the file.
-  cmap w!! w !sudo tee % >/dev/null
-
-  " Some helpers to edit mode
-  " http://vimcasts.org/e/14
-  cnoremap %% <C-R>=expand('%:h').'/'<cr>
-  map <leader>ew :e %%
-  map <leader>es :sp %%
-  map <leader>ev :vsp %%
-  map <leader>et :tabe %%
-
-  " Easier horizontal scrolling
-  map zl zL
-  map zh zH
-
-  " Last tab binding
-  let g:lasttab = 1
-  nmap <c-w>; :exe "tabn ".g:lasttab<cr>
-  au TabLeave * let g:lasttab = tabpagenr()
-
-  " Don't move on *
-  nnoremap * *<c-o>
-
-  " Keep search matches in the middle of the window.
-  nnoremap n nzzzv
-  nnoremap N Nzzzv
-" }
-
-"-------------------------------------------------------------------------------
-" FileType Settings
-"-------------------------------------------------------------------------------
-autocmd FileType python setlocal sw=2 ts=2 sts=2 tw=79 expandtab wrap
-
-"-------------------------------------------------------------------------------
-" Plugin Settings
-"-------------------------------------------------------------------------------
-" delimitMat
-let delimitMate_quotes = "\" \'"
-let delimitMate_smart_quotes = 0
-
-" Powerline
-let g:Powerline_symbols='fancy'
-
-
-" Python-Mode
-" Don't autofold code
-let g:pymode_folding = 0
-let g:pymode_lint_checkers = ['pep8']
-let g:pymode_lint_ignore = ['E111']
-let g:pymode_lint_signs = 0
-let g:pymode_trim_whitespaces = 0
-let g:pymode_lint = 0
-
-" CtrlP
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_working_path_mode = 'r'
-nnoremap <silent> <D-t> :CtrlP<CR>
-nnoremap <silent> <D-r> :CtrlPMRU<CR>
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-  \ 'file': '\.exe$\|\.so$\|\.dll$'
-\ }
-let g:ctrlp_user_command = {
-  \ 'types': {
-    \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
-    \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-  \ },
-  \ 'fallback': 'find %s -type f'
-\ }
-
-" NerdTree shortcut
-nnoremap <leader>d :NERDTreeToggle<cr>
-
-" Provide easy way to refresh NerdTree location
-nnoremap <C-o> :NERDTree %<CR>
-
-let NERDTreeIgnore = ['\.pyc$']
-
-
-" Tabularize {
-  nmap <Leader>a& :Tabularize /&<CR>
-  vmap <Leader>a& :Tabularize /&<CR>
-  nmap <Leader>a= :Tabularize /=<CR>
-  vmap <Leader>a= :Tabularize /=<CR>
-  nmap <Leader>a: :Tabularize /:<CR>
-  vmap <Leader>a: :Tabularize /:<CR>
-  nmap <Leader>a:: :Tabularize /:\zs<CR>
-  vmap <Leader>a:: :Tabularize /:\zs<CR>
-  nmap <Leader>a, :Tabularize /,<CR>
-  vmap <Leader>a, :Tabularize /,<CR>
-  nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-  vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-  nmap <Leader>a- :Tabularize /=><CR>
-  vmap <Leader>a- :Tabularize /=><CR>
-" }
-
-" Fugitive {
-  nnoremap <silent> <leader>gs :Gstatus<CR>
-  nnoremap <silent> <leader>gd :Gdiff<CR>
-  nnoremap <silent> <leader>gc :Gcommit<CR>
-  nnoremap <silent> <leader>gb :Gblame<CR>
-  nnoremap <silent> <leader>gl :Glog<CR>
-  nnoremap <silent> <leader>gp :Git push<CR>
-"}
-
-" zencoding {
-  let g:user_emmet_leader_key = '<c-g>'
-" }
-
-" Tabline modifications
-if has('gui')
-  set guioptions-=e
-endif
-if exists("+showtabline")
-  function! MyTabLine()
-    let s = ''
-    let t = tabpagenr()
-    let i = 1
-    while i <= tabpagenr('$')
-      let buflist = tabpagebuflist(i)
-      let winnr = tabpagewinnr(i)
-      let s .= '%' . i . 'T'
-      let s .= (i == t ? '%1*' : '%2*')
-      let s .= ' '
-      let s .= i . ':'
-      let s .= winnr . '/' . tabpagewinnr(i,'$')
-      let s .= ' %*'
-      let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
-      let bufnr = buflist[winnr - 1]
-      let file = bufname(bufnr)
-      let buftype = getbufvar(bufnr, 'buftype')
-      if buftype == 'nofile'
-        if file =~ '\/.'
-          let file = substitute(file, '.*\/\ze.', '', '')
-        endif
-      else
-        let file = fnamemodify(file, ':p:t')
-      endif
-      if file == ''
-        let file = '[No Name]'
-      endif
-      let s .= file
-      let i = i + 1
-    endwhile
-    let s .= '%T%#TabLineFill#%='
-    let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
-    return s
-  endfunction
-  set stal=2
-  set tabline=%!MyTabLine()
-endif
+"""" KEYMAPPINGS
+  " Clear highlighting on escape in normal mode
+  nnoremap <esc> :noh<return><esc>
+  nnoremap <esc>^[ <esc>^[
+  noremap <Leader>y "*y"
+  noremap <Leader>p "*p"
+  noremap <Leader>Y "*Y"
+  noremap <Leader>P "+P"
