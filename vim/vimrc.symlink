@@ -1,7 +1,5 @@
 set nocompatible
 set ttyfast
-set termguicolors
-let macvim_skip_colorscheme=1
 set t_ut=
 
 set modeline
@@ -52,29 +50,17 @@ call plug#end()
   let g:NERDTreeDirArrowExpandable = '▸'
   let g:NERDTreeDirArrowCollapsible = '▾'
 
-  " Tab Ctrl+l,h,n
+  " Tab Ctrl+l,h,i
   map  <C-l> :tabn<CR>
   map  <C-h> :tabp<CR>
-  "map  <C-n> :tabnew<CR>
+  map  <C-i> :tabnew<CR>
 
   map <C-n> :NERDTreeToggle<CR>         " Open NERDTree with Ctrl+j
 
   " Provide easy way to refresh NerdTree location
   nnoremap <C-o> :NERDTree %<CR>
 
-  let NERDTreeIgnore = ['\.pyc$']
-
-"""" UI SETTINGS
-  colorscheme tender
-  autocmd VimEnter * colorscheme tender
-  highlight clear SignColumn      " SignColumn should match background for
-                                  " things like vim-gitgutter
-
-  highlight Comment cterm=italic " Italic comments.
-  highlight Comment gui=italic " Italic comments in gui.
-  highlight Todo cterm=italic " Italic comments.
-  highlight Todo gui=italic " Italic comments in gui.
-  highlight Visual guibg=LightGrey
+  "let NERDTreeIgnore = ['\.pyc$']  " Should be covered by .gitignore
 
 """" GENERAL SETTINGS
   if executable('ag')
@@ -90,6 +76,13 @@ call plug#end()
   endif
 
 
+  " tabs
+  set tabstop=2
+  set softtabstop=2
+  set shiftwidth=2
+  set expandtab
+  set smarttab
+
   set splitbelow
   set splitright
   set helpheight=30
@@ -103,18 +96,9 @@ call plug#end()
   if has('mouse_sgr')
       set ttymouse=sgr
   endif
-
-  " tabs
-  set tabstop=2
-  set softtabstop=2
-  set shiftwidth=2
-  set expandtab
-  set smarttab
-
   set wildmenu
   set sidescroll=1
   set nohidden
-
   filetype plugin indent on   " Automatically detect file types.
   syntax on                   " Syntax highlighting
   set spell                   " Spell checking on
@@ -137,8 +121,6 @@ call plug#end()
   set hidden                          " Allow buffer switching without saving
   set nocompatible "?
   set ttyfast "?
-  set termguicolors "?
-  let macvim_skip_colorscheme=1 "?
   set t_ut= "?
   set modeline
   set modelines=5
@@ -182,7 +164,7 @@ call plug#end()
   set wildmenu                    " Show list instead of just completing
   set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
   set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
-  set scrolljump=5                " Lines to scroll when cursor leaves screen
+  set scrolljump=8                " Lines to scroll when cursor leaves screen
   set scrolloff=3                 " Minimum lines to keep above and below cursor
   set foldenable                  " Auto fold code
   set list
@@ -205,3 +187,29 @@ call plug#end()
   noremap <Leader>p "*p"
   noremap <Leader>Y "*Y"
   noremap <Leader>P "+P"
+
+
+"""" UI SETTINGS
+  " If you have vim >=8.0 or Neovim >= 0.1.5
+  if (has("termguicolors"))
+   set termguicolors
+  endif
+
+  " For Neovim 0.1.3 and 0.1.4
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+  " Theme
+  syntax enable
+  colorscheme tender
+
+  " set lighline theme inside lightline config
+  let g:lightline = { 'colorscheme': 'tender' }
+
+  " set airline theme
+  let g:airline_theme = 'tender'
+
+  " Fix for MacVim
+  let macvim_skip_colorscheme=1
+
+  hi Visual guifg=#040404 ctermfg=NONE guibg=#EDEDED ctermbg=0 gui=NONE cterm=NONE
+  hi VisualNOS guifg=#040404 ctermfg=NONE guibg=#EDEDED ctermbg=0 gui=NONE cterm=NONE
