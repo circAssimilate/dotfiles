@@ -1,3 +1,8 @@
+export GOOGLE_APPLICATION_CREDENTIALS=/Users/dhammond/.config/gcloud/application_default_credentials.json
+
+# for docker-compose up monolith-backend
+export MONOLITH_ROOT=/Users/dhammond/Development/optimizely/
+
 # export primordia/bin
 export PATH=/Users/dhammond/Development/primordia/bin:$PATH
 export PRIMORDIA_HOME=/Users/dhammond/Development/primordia/
