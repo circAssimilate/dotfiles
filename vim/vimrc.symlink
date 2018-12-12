@@ -76,6 +76,30 @@ call plug#end()
   endif
 
 
+  nnoremap gf :call OpenOptimizelyFile(expand('<cfile>'), 'edit')<CR>
+  nnoremap gr :call OpenOptimizelyFile(expand('<cfile>'), 'tabe')<CR>
+  function! OpenOptimizelyFile(file, cmd)
+    let cmd = a:cmd
+    let l:found = 0
+    let to_try = [
+          \simplify(expand('%:p:h') .'/' . a:file . '.js'),
+          \simplify(expand('%:p:h') .'/' . a:file . '/index.js'),
+          \simplify($MONOLITH_ROOT . '/src/www/frontend/src/js/' . a:file . '.js'),
+          \simplify($MONOLITH_ROOT . '/src/www/frontend/src/js/' . a:file .  '/index.js'),
+          \]
+
+    for f in to_try
+      if filereadable(f)
+        let l:found = f
+        break
+      endif
+    endfor
+
+    if !empty(l:found)
+      execute cmd . ' ' . found
+    endif
+  endfunction
+
   " tabs
   set tabstop=2
   set softtabstop=2
@@ -213,3 +237,4 @@ call plug#end()
 
   hi Visual guifg=#040404 ctermfg=NONE guibg=#EDEDED ctermbg=0 gui=NONE cterm=NONE
   hi VisualNOS guifg=#040404 ctermfg=NONE guibg=#EDEDED ctermbg=0 gui=NONE cterm=NONE
+

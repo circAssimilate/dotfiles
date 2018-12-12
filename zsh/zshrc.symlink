@@ -1,7 +1,6 @@
 export GOOGLE_APPLICATION_CREDENTIALS=/Users/dhammond/.config/gcloud/application_default_credentials.json
 
-# for docker-compose up monolith-backend
-export MONOLITH_ROOT=/Users/dhammond/Development/optimizely/
+#export PYTHONPATH=/Users/dhammond/Development/optimizely/src/www/
 
 # export primordia/bin
 export PATH=/Users/dhammond/Development/primordia/bin:$PATH
@@ -54,8 +53,22 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 # Vim as default editor
 export EDITOR=vim
 
+
+## Google Cloud SDK
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/usr/local/google-cloud-sdk/path.zsh.inc' ]; then source '/usr/local/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/dhammond/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dhammond/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/usr/local/google-cloud-sdk/completion.zsh.inc' ]; then source '/usr/local/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '/Users/dhammond/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/dhammond/google-cloud-sdk/completion.zsh.inc'; fi
+
+## Optimizely Monolith
+# for docker-compose up monolith-backend
+export MONOLITH_ROOT=/Users/dhammond/Development/optimizely/
+export SQL_DATABASE_CONFIG="$MONOLITH_ROOT/zipline/databases.yaml"
+export PYTHONPATH="$HOME/google-cloud-sdk:$HOME/google-cloud-sdk/platform:$HOME/google-cloud-sdk/platform/google_appengine:$HOME/google-cloud-sdk/platform/google_appengine/lib/fancy_urllib"
+export DATASTORE_FILE=www_datastore
+export LOG_LEVEL=info
+export PIP_INDEX_URL="https://derek:AKCp5aU5qsr1wPrxtvtVLEMw38a4Z8f8NN7CC3pPTw5Aw2q8kxJxi6mLEH2RLF5YaVjHDgvUd@optimizely.jfrog.io/optimizely/api/pypi/pypi/simple"
+
+# initialize pyenv
+eval "$(pyenv init -)"
