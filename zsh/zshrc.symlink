@@ -1,3 +1,7 @@
+# initialize autocomplete here, otherwise functions won't be loaded
+autoload -U compinit
+compinit
+
 export GOOGLE_APPLICATION_CREDENTIALS=/Users/dhammond/.config/gcloud/application_default_credentials.json
 
 #export PYTHONPATH=/Users/dhammond/Development/optimizely/src/www/
@@ -6,6 +10,7 @@ export GOOGLE_APPLICATION_CREDENTIALS=/Users/dhammond/.config/gcloud/application
 export PATH=/Users/dhammond/Development/primordia/bin:$PATH
 export PRIMORDIA_HOME=/Users/dhammond/Development/primordia/
 export PRIMORDIA_ROOT=/Users/dhammond/Development/primordia/
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
@@ -28,10 +33,6 @@ for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
 do
   source $file
 done
-
-# initialize autocomplete here, otherwise functions won't be loaded
-autoload -U compinit
-compinit
 
 # load every completion after autocomplete loads
 for file in ${(M)config_files:#*/completion.zsh}
@@ -72,3 +73,10 @@ export PIP_INDEX_URL="https://derek:AKCp5aU5qsr1wPrxtvtVLEMw38a4Z8f8NN7CC3pPTw5A
 
 # initialize pyenv
 eval "$(pyenv init -)"
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /Users/dhammond/Development/code-review-karma/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/dhammond/Development/code-review-karma/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /Users/dhammond/Development/code-review-karma/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/dhammond/Development/code-review-karma/node_modules/tabtab/.completions/sls.zsh

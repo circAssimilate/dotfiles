@@ -59,6 +59,7 @@ call plug#end()
 
   " Provide easy way to refresh NerdTree location
   nnoremap <C-o> :NERDTree %<CR>
+  let NERDTreeShowHidden=1
 
   let NERDTreeIgnore = ['\.pyc$']  " Should be covered by .gitignore
 
