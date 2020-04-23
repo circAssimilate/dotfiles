@@ -79,3 +79,88 @@ to store these in (e.g. `credentials.zsh`).
 ## Reloading Dotfiles
 
 You can restart your session or just use `reload!` in any shell to get the latest configuration.
+
+## Karabiner Elements
+
+Modify your _caps lock_ key to behave like escape when pressed alone or the control key when pressed with another key. Download [Karabiner](https://karabiner-elements.pqrs.org/) and add this rule.
+
+```
+{
+  "title": "Caps and return to ctrl. Ctrl to caps.",
+  "rules": [
+    {
+      "description": "Post left_ctrl when return_or_enter is hold.",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "return_or_enter",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "right_control"
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "return_or_enter"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Post escape if caps is pressed alone, left_ctrl otherwise",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "caps_lock",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_control"
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "escape"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Map left_ctrl to caps_lock.",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "left_control",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "caps_lock"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}
+```
