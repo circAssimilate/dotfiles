@@ -82,84 +82,33 @@ You can restart your session or just use `reload!` in any shell to get the lates
 
 ## Karabiner Elements
 
-Modify your _caps lock_ key to behave like escape when pressed alone or the control key when pressed with another key. Download [Karabiner](https://karabiner-elements.pqrs.org/) and add these rules.
+Modify your _caps lock_ key to behave like escape when pressed alone or the control key when pressed with another key. Download and install [Karabiner](https://karabiner-elements.pqrs.org/) and add the following to the `rules` list.
 
 ```
 {
-        "rules": [
-          {
-            "description": "Post left_ctrl when return_or_enter is hold.",
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "return_or_enter",
-                  "modifiers": {
-                    "optional": [
-                      "any"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "right_control"
-                  }
-                ],
-                "to_if_alone": [
-                  {
-                    "key_code": "return_or_enter"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "Post escape if caps is pressed alone, left_ctrl otherwise",
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "caps_lock",
-                  "modifiers": {
-                    "optional": [
-                      "any"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "left_control"
-                  }
-                ],
-                "to_if_alone": [
-                  {
-                    "key_code": "escape"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "Map left_ctrl to caps_lock.",
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "left_control",
-                  "modifiers": {
-                    "optional": [
-                      "any"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "caps_lock"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          }
-        ]
+  "description": "Post escape if caps is pressed alone, left_ctrl otherwise",
+  "manipulators": [
+    {
+      "from": {
+        "key_code": "caps_lock",
+        "modifiers": {
+          "optional": [
+            "any"
+          ]
+        }
+      },
+      "to": [
+        {
+          "key_code": "left_control"
+        }
+      ],
+      "to_if_alone": [
+        {
+          "key_code": "escape"
+        }
+      ],
+      "type": "basic"
+    }
+  ]
 }
 ```
