@@ -112,3 +112,12 @@ Modify your _caps lock_ key to behave like escape when pressed alone or the cont
   ]
 }
 ```
+
+## Updating Screenshots Directory
+
+Remove the dropshadow from screenshots then configure them to save to the `~/Screenshots` directory:
+
+```
+defaults write com.apple.screencapture disable-shadow -bool true && killall SystemUIServer
+mkdir ~/Screenshots && defaults write com.apple.screencapture location ~/Screenshots
+```
