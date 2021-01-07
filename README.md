@@ -82,7 +82,7 @@ You can restart your session or just use `reload!` in any shell to get the lates
 
 ## Karabiner Elements
 
-Modify your _caps lock_ key to behave like escape when pressed alone or the control key when pressed with another key. Download and install [Karabiner](https://karabiner-elements.pqrs.org/) and add the following to the `rules` list.
+Modify your _caps lock_ key to behave like escape when pressed alone or the control key when pressed with another key. Download and install [Karabiner](https://karabiner-elements.pqrs.org/) and add the following to the `rules` list withini the home folder karabiner config (`~/config/karabiner/karabiner.json`).
 
 ```
 {
