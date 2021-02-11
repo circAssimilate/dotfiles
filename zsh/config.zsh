@@ -62,3 +62,5 @@ bindkey '^r' history-incremental-search-backward
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '\C-x\C-e' edit-command-line
+
+ZSH_DISABLE_COMPFIX=true

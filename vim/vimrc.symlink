@@ -55,7 +55,7 @@ call plug#end()
   map  <C-h> :tabp<CR>
   map  <C-i> :tabnew<CR>
 
-  map <C-n> :NERDTreeToggle<CR>         " Open NERDTree with Ctrl+j
+  map <C-n> :NERDTreeToggle<CR>         " Open NERDTree with Ctrl+n
 
   " Provide easy way to refresh NerdTree location
   nnoremap <C-o> :NERDTree %<CR>
