@@ -1,1 +1,0 @@
-alias dcc='docker-compose'

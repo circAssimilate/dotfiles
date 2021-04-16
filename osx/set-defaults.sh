@@ -18,3 +18,7 @@ defaults write com.apple.Finder FXPreferredViewStyle Nlsv
 
 # Show the ~/Library folder
 chflags nohidden ~/Library
+
+# Remove the dropshadow from screenshots then configure them to save to the ~/Screenshots directory
+defaults write com.apple.screencapture disable-shadow -bool true && killall SystemUIServer
+defaults write com.apple.screencapture location ~/Screenshots
